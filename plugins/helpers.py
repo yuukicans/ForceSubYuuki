@@ -145,7 +145,7 @@ class Helpers:
         )
         return copied.id
 
-    def admikb(self) -> None:
+    def admikb(self) -> ikb:
         buttons = []
         if self.fsubcids:
             for cid in self.fsubcids:
