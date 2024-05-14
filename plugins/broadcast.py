@@ -6,7 +6,6 @@ from pyrogram.errors import FloodWait
 from pyrogram.errors import RPCError
 from pyrogram.filters import command
 from pyrogram.filters import create
-from pyrogram.filters import private
 from pyrogram.filters import regex
 from pyrogram.handlers import CallbackQueryHandler
 from pyrogram.handlers import MessageHandler
@@ -183,7 +182,7 @@ Bot.add_handler(
 Bot.add_handler(
     CallbackQueryHandler(
         cbqbcstats,
-        filters=regex(r'^bc')
+        filters=regex(r'^bc'),
     ),
 )
 Bot.add_handler(

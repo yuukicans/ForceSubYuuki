@@ -40,7 +40,7 @@ class Helpers:
         if share:
             return f'https://t.me/share/url?url={string}'
         return f'https://t.me/{self._client_.me.username}?start={string}'
-    
+
     @property
     def clear(self):
         self.cacheids = {}

@@ -1,5 +1,3 @@
-import asyncio
-
 from pyrogram.errors import RPCError
 from pyrogram.filters import command
 from pyrogram.filters import private
@@ -119,8 +117,8 @@ async def cbqchange(client: Bot, cbq: CallbackQuery):
     if data in ['prtctcntnt', 'gen']:
         status = bvar.get(
             'PROTECT_CONTENT' if data == 'prtctcntnt'
-            else 'GEN_STATUS', 
-            []
+            else 'GEN_STATUS',
+            [],
         )[0]
         await replace(
             'PROTECT_CONTENT' if data == 'prtctcntnt'
@@ -310,7 +308,7 @@ Bot.add_handler(
 Bot.add_handler(
     CallbackQueryHandler(
         cbqhome,
-        filters=regex(r'^home')
+        filters=regex(r'^home'),
     ),
 )
 Bot.add_handler(

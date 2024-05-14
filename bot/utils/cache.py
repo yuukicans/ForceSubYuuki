@@ -19,20 +19,20 @@ class Cache:
 
     async def gvars(self):
         return await self.db.gvars('BOT_VARS')
-    
+
     async def admnvar(self):
         bvars = await self.gvars()
         return bvars.get('ADMIN_IDS', [])
-    
+
     async def relown(self):
         owner = Config.OWNER_ID
         admns = await self.admnvar()
         if owner not in admns:
             await self.db.invar(
-            'BOT_VARS',
-            'ADMIN_IDS',
-            owner,
-        )
+                'BOT_VARS',
+                'ADMIN_IDS',
+                owner,
+            )
 
     @property
     def vars(self):
