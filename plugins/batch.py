@@ -75,7 +75,6 @@ async def batch(client: Bot, message: Message):
     ])
     await message.reply(
         urlstr,
-        quote=True,
         reply_markup=markup,
     )
 
