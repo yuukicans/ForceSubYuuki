@@ -1,3 +1,5 @@
+import functools
+
 from pyrogram.errors import RPCError
 from pyrogram.helpers import ikb
 from pyrogram.types import Message
@@ -68,9 +70,9 @@ class Helpers:
                     'title': title,
                     'ilink': ilink,
                 }
-                self._client_.log.info(f'FSub-{i + 1} Initialized')
+                self._client_.log.info(f'FSubID-{i + 1} Initialized')
             except RPCError as e:
-                self._client_.log.warning(f'FSub-{i + 1}: {e}')
+                self._client_.log.warning(f'FSubID-{i + 1}: {e}')
 
     async def usrikb(
         self,
@@ -182,10 +184,14 @@ helpers = Helpers(Bot)
 class Filter:
     @staticmethod
     def decorator(func) -> callable:
+        @functools.wraps(func)
         async def wrapped(client, event):
             if hasattr(event, 'from_user'):
                 user = event.from_user.id
-            elif hasattr(event, 'message') and hasattr(event.message, 'chat'):
+            elif (
+                hasattr(event, 'message')
+                and hasattr(event.message, 'chat')
+            ):
                 user = event.message.chat.id
             else:
                 return
@@ -194,7 +200,7 @@ class Filter:
             await func(client, event)
         return wrapped
 
-    def Admins(self, func):
+    def Admins(self, func) -> callable:
         return self.decorator(func)
 
 

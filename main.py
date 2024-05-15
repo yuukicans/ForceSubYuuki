@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import sys
 
 from pyrogram.errors import RPCError
@@ -17,6 +18,7 @@ async def main():
 
     Bot.log.info('Initializing DatabaseID')
     await getdbcid()
+    Bot.log.info('DatabaseID Initialized')
 
     Bot.log.info('Fetching Mongo Database')
     await Bot.var.fetching()
@@ -36,6 +38,31 @@ async def main():
     Bot.log.info('Restart Data Checked')
 
 
+def rpchndlr(func):
+    @functools.wraps(func)
+    async def wrapper() -> callable:
+        try:
+            return await func()
+        except RPCError as e:
+            Bot.log.error(str(e))
+            sys.exit(1)
+    return wrapper
+
+
+@rpchndlr
+async def starting():
+    await Bot.start()
+
+
+@rpchndlr
+async def getdbcid():
+    hellomsg = await Bot.send_message(
+        Bot.env.DATABASE_ID,
+        'Hello Worldl!',
+    )
+    await hellomsg.delete()
+
+
 async def dbctrl():
     bvar = await Bot.mdb.gvars('BOT_VARS')
     dvar = {
@@ -50,14 +77,6 @@ async def dbctrl():
                 await Bot.mdb.invar('BOT_VARS', key, value)
 
 
-async def starting():
-    try:
-        await Bot.start()
-    except RPCError as e:
-        Bot.log.error(str(e))
-        sys.exit(1)
-
-
 async def botcmd():
     await Bot.set_bot_commands(
         [
@@ -65,18 +84,6 @@ async def botcmd():
         ],
     )
     Bot.log.info('Bot Command Has Set')
-
-
-async def getdbcid():
-    try:
-        hellomsg = await Bot.send_message(
-            Bot.env.DATABASE_ID,
-            'Hello Worldl!',
-        )
-        Bot.log.info('DatabaseChat Initialized')
-        await hellomsg.delete()
-    except RPCError as e:
-        Bot.log.warning(str(e))
 
 
 async def rmsg(_id: str):
