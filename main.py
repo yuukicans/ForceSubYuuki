@@ -70,6 +70,7 @@ async def dbctrl():
         'PROTECT_CONTENT': True,
         'START_MESSAGE': Bot.env.startmsg,
         'FORCE_MESSAGE': Bot.env.forcemsg,
+        'ADMIN_IDS': Bot.env.OWNER_ID,
     }
     if bvar:
         for key, value in dvar.items():
