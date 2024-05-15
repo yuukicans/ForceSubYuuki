@@ -6,12 +6,12 @@ on:
       - master
 
 jobs:
-  build-and-push:
+  Docker-Push:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Login
       run: |
@@ -19,12 +19,14 @@ jobs:
         -p ${{ secrets.DOCKER_TOKEN }}
 
     - name: Build
-      run: docker build . -t fsub:${{ github.sha }}
+      run: docker build . -t ugorwx/fsub:${{ github.sha }}
 
     - name: Tag
-      run: docker tag fsub:${{ github.sha }} fsub:latest
+      run: |
+        docker tag ugorwx/fsub:${{ github.sha }} \
+        ugorwx/fsub:latest
 
     - name: Push
       run: |
-        docker push fsub:${{ github.sha }}
-        docker push fsub:latest
+        docker push ugorwx/fsub:${{ github.sha }}
+        docker push ugorwx/fsub:latest
