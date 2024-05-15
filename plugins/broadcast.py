@@ -14,7 +14,7 @@ from pyrogram.raw.functions import Ping
 from pyrogram.types import CallbackQuery
 from pyrogram.types import Message
 
-from .helpers import Filter
+from .helpers import decorator
 from .helpers import helpers
 from .helpers import Markup
 from bot.client import Bot
@@ -26,7 +26,7 @@ gVarBcFail = 0
 gVarBcTotal = 0
 
 
-@Filter.Admins
+@decorator.Admins
 async def broadcast(client: Bot, message: Message):
     async def progress(msg):
         global gVarBcSent
@@ -135,7 +135,7 @@ async def cbqbcstats(client: Bot, cbq: CallbackQuery):
         )
 
 
-@Filter.Admins
+@decorator.Admins
 async def cbqstats(client: Bot, cbq: CallbackQuery):
     global gVarBcRun
     global gVarBcSent

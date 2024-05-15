@@ -8,13 +8,13 @@ from pyrogram.helpers import ikb
 from pyrogram.types import CallbackQuery
 from pyrogram.types import Message
 
-from .helpers import Filter
+from .helpers import decorator
 from .helpers import helpers
 from .helpers import Markup
 from bot.client import Bot
 
 
-@Filter.Admins
+@decorator.Admins
 async def configs(_, message: Message):
     await message.reply(
         'Bot Configuration Menu:',
@@ -23,7 +23,7 @@ async def configs(_, message: Message):
     await message.delete()
 
 
-@Filter.Admins
+@decorator.Admins
 async def cbqhome(client: Bot, cbq: CallbackQuery):
     data = cbq.data.split('-')[1]
     action = {
@@ -41,7 +41,7 @@ async def cbqhome(client: Bot, cbq: CallbackQuery):
         await action()
 
 
-@Filter.Admins
+@decorator.Admins
 async def cbqset(client: Bot, cbq: CallbackQuery):
     bvar = client.var.vars
     data = cbq.data.split('-')[1]
@@ -96,7 +96,7 @@ async def cbqset(client: Bot, cbq: CallbackQuery):
         await action()
 
 
-@Filter.Admins
+@decorator.Admins
 async def cbqchange(client: Bot, cbq: CallbackQuery):
     async def replace(field, new):
         await client.mdb.outvars('BOT_VARS', field)
@@ -142,7 +142,7 @@ async def cbqchange(client: Bot, cbq: CallbackQuery):
         )
 
 
-@Filter.Admins
+@decorator.Admins
 async def cbqadd(client: Bot, cbq: CallbackQuery):
     async def addvar(field, new):
         await client.mdb.invar(
@@ -217,7 +217,7 @@ async def cbqadd(client: Bot, cbq: CallbackQuery):
     )
 
 
-@Filter.Admins
+@decorator.Admins
 async def cbqdel(client: Bot, cbq: CallbackQuery):
     async def delvar(field, newkey):
         await client.mdb.rmvar(

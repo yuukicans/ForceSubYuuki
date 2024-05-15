@@ -181,7 +181,7 @@ class Helpers:
 helpers = Helpers(Bot)
 
 
-class Filter:
+class Decorator:
     @staticmethod
     def decorator(func) -> callable:
         @functools.wraps(func)
@@ -204,7 +204,7 @@ class Filter:
         return self.decorator(func)
 
 
-Filter = Filter()
+decorator = Decorator()
 
 
 class Markup:

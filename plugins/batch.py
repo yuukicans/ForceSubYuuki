@@ -6,12 +6,12 @@ from pyrogram.handlers import MessageHandler
 from pyrogram.helpers import ikb
 from pyrogram.types import Message
 
-from .helpers import Filter
+from .helpers import decorator
 from .helpers import helpers
 from bot.client import Bot
 
 
-@Filter.Admins
+@decorator.Admins
 async def batch(client: Bot, message: Message):
     cid = message.chat.id
     uid = message.from_user.id
