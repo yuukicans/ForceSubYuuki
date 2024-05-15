@@ -33,8 +33,8 @@ async def batch(client: Bot, message: Message):
             return None
         return cask
 
-    def glink(msgid):
-        return f'https://t.me/{str(cdb)[4:]}/{msgid}'
+    def dburl(msgid):
+        return f'https://t.me/c/{str(cdb)[4:]}/{msgid}'
 
     fask = await ask(
         'Forward: First Message',
@@ -43,14 +43,15 @@ async def batch(client: Bot, message: Message):
     if not fask:
         return
     first = fask.forward_from_message_id
-    flink = glink(first)
+    flink = dburl(first)
     await fask.delete()
 
     lask = await ask('Forward: Last Message', flink)
     if not lask:
         return
     last = lask.forward_from_message_id
-    lurl = glink(last)
+    lurl = dburl(last)
+    await lask.delete()
 
     with contextlib.suppress(ValueError):
         if (abs(int(first) - int(last)) + 1) > 200:
