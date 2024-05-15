@@ -2,6 +2,7 @@ import functools
 
 from pyrogram.errors import RPCError
 from pyrogram.helpers import ikb
+from pyrogram.types import CallbackQuery
 from pyrogram.types import Message
 
 from bot.client import Bot
@@ -27,13 +28,13 @@ class Helpers:
         self._client_.log.info('Admins Initialized')
         self.fsubcids = self.gvars('FSUB_IDS')
         self.protectc = self.gvars('PROTECT_CONTENT')[0]
-        self._client_.log.info(f'Protect: {self.protectc}')
+        self._client_.log.info(f'Protect {self.protectc}')
         self.startmsg = self.gvars('START_MESSAGE')[0]
         self._client_.log.info('Start Text Initialized')
         self.forcemsg = self.gvars('FORCE_MESSAGE')[0]
         self._client_.log.info('Force Text Initialized')
         self.generate = self.gvars('GEN_STATUS')[0]
-        self._client_.log.info(f'Generate: {self.generate}')
+        self._client_.log.info(f'Generate {self.generate}')
 
     def urlikb(self, text: str, url: str) -> ikb:
         return ikb([[(text, url, 'url')]])
@@ -70,9 +71,13 @@ class Helpers:
                     'title': title,
                     'ilink': ilink,
                 }
-                self._client_.log.info(f'FSubID-{i + 1} Initialized')
+                self._client_.log.info(
+                    f'FSubID-{i + 1} Initialized',
+                )
             except RPCError as e:
-                self._client_.log.warning(f'FSubID-{i + 1}: {e}')
+                self._client_.log.warning(
+                    f'FSubID-{i + 1}: {e}',
+                )
 
     async def usrikb(
         self,
@@ -103,7 +108,7 @@ class Helpers:
             )
         return ikb(layouts)
 
-    async def nojoin(self, user: int) -> list[int] or None:
+    async def nojoin(self, user: int) -> list[int] | None:
         joined = set()
         if not self.fsubcids or user in self.adminids:
             return None
@@ -183,25 +188,36 @@ helpers = Helpers(Bot)
 
 class Decorator:
     @staticmethod
-    def decorator(func) -> callable:
+    def admins(func: callable) -> callable:
         @functools.wraps(func)
-        async def wrapped(client, event):
-            if hasattr(event, 'from_user'):
-                user = event.from_user.id
-            elif (
-                hasattr(event, 'message')
-                and hasattr(event.message, 'chat')
+        async def wrapped(bot, event):
+            user = Decorator.gusr(event)
+            if (
+                user in helpers.adminids
+                and isinstance(
+                    event, (Message, CallbackQuery),
+                )
             ):
-                user = event.message.chat.id
-            else:
-                return
-            if user not in helpers.adminids:
-                return
-            await func(client, event)
+                await func(bot, event)
         return wrapped
 
-    def Admins(self, func) -> callable:
-        return self.decorator(func)
+    @staticmethod
+    def gusr(event: Message | CallbackQuery) -> int:
+        if hasattr(event, 'from_user'):
+            return event.from_user.id
+        if (
+            hasattr(event, 'message')
+            and hasattr(event.message, 'chat')
+        ):
+            return event.message.chat.id
+        return -1
+
+    def __call__(self, decors) -> callable:
+        def decorator(func):
+            if 'adminsOnly' in decors:
+                func = self.admins(func)
+            return func
+        return decorator
 
 
 decorator = Decorator()

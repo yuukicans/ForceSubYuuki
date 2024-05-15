@@ -11,13 +11,13 @@ from .helpers import helpers
 from bot.client import Bot
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def batch(client: Bot, message: Message):
     cid = message.chat.id
     uid = message.from_user.id
     cdb = client.env.DATABASE_ID
 
-    async def ask(text, link):
+    async def ask(text, link) -> None:
         cask = await client.ask(
             chat_id=cid,
             text=text,
@@ -33,7 +33,7 @@ async def batch(client: Bot, message: Message):
             return None
         return cask
 
-    def dburl(msgid):
+    def dburl(msgid) -> str:
         return f'https://t.me/c/{str(cdb)[4:]}/{msgid}'
 
     await message.delete()

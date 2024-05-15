@@ -18,10 +18,10 @@ class Bot(Client):
     mdb = Database
 
     def __init__(self):
-        name = self.env.BOT_ID
-        api_id = self.env.API_ID
-        api_hash = self.env.API_HASH
-        bot_token = self.env.BOT_TOKEN
+        name: str = self.env.BOT_ID
+        api_id: int = self.env.API_ID
+        api_hash: str = self.env.API_HASH
+        bot_token: str = self.env.BOT_TOKEN
 
         super().__init__(
             name, api_id, api_hash,

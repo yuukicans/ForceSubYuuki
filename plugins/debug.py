@@ -12,7 +12,7 @@ from pyrogram.types import Message
 from bot.client import Bot
 
 
-async def log(_, message: Message):
+async def log(_: Bot, message: Message):
     await message.reply_document('log.txt', quote=True)
 
 

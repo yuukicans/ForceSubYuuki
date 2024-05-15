@@ -35,7 +35,7 @@ class Cache:
             )
 
     @property
-    def vars(self):
+    def vars(self) -> dict:
         return self.data
 
 

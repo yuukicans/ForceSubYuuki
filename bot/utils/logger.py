@@ -3,7 +3,7 @@ import logging
 
 
 class Time:
-    def __init__(self, offset: int):
+    def __init__(self, offset: int) -> None:
         self.offset = offset
 
     def _offset_(self) -> datetime:

@@ -12,7 +12,7 @@ class Database:
         self.users = self.mongo['users']
         self.rstrt = self.mongo['rstrt']
 
-    async def gvars(self, _id: str | int) -> None:
+    async def gvars(self, _id: str | int) -> dict | None:
         return await self.bvars.find_one({'_id': _id})
 
     async def invar(
@@ -48,7 +48,7 @@ class Database:
             {'$unset': {field: ''}},
         )
 
-    async def gusrs(self) -> list[int] or None:
+    async def gusrs(self) -> list[int | None]:
         pipe = [{'$project': {'_id': 1}}]
         crsr = self.users.aggregate(pipe)
         return [document['_id'] async for document in crsr]
@@ -74,7 +74,7 @@ class Database:
             },
         )
 
-    async def gmsgs(self, msg: str) -> dict or None:
+    async def gmsgs(self, msg: str) -> dict | None:
         return await self.rstrt.find_one(
             {'_id': msg},
         )

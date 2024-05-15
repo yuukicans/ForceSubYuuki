@@ -14,8 +14,8 @@ from .helpers import Markup
 from bot.client import Bot
 
 
-@decorator.Admins
-async def configs(_, message: Message):
+@decorator(['adminsOnly'])
+async def configs(_: Bot, message: Message):
     await message.reply(
         'Bot Configuration Menu:',
         reply_markup=ikb(Markup.HOME),
@@ -23,7 +23,7 @@ async def configs(_, message: Message):
     await message.delete()
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def cbqhome(client: Bot, cbq: CallbackQuery):
     data = cbq.data.split('-')[1]
     action = {
@@ -41,7 +41,7 @@ async def cbqhome(client: Bot, cbq: CallbackQuery):
         await action()
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def cbqset(client: Bot, cbq: CallbackQuery):
     bvar = client.var.vars
     data = cbq.data.split('-')[1]
@@ -96,7 +96,7 @@ async def cbqset(client: Bot, cbq: CallbackQuery):
         await action()
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def cbqchange(client: Bot, cbq: CallbackQuery):
     async def replace(field, new):
         await client.mdb.outvars('BOT_VARS', field)
@@ -114,17 +114,17 @@ async def cbqchange(client: Bot, cbq: CallbackQuery):
         )
         crrnt = bvar.get(field, [])[0]
         await replace(field, not crrnt)
-        smsg = (
+        smsgs = (
             'Protect Content' if data == 'prtctcntnt'
             else 'Generator'
         )
         await cbq.message.edit(
-            smsg + ' Changed',
+            smsgs + ' Changed',
             reply_markup=ikb(Markup.BACK),
         )
     elif data in ['strtmsg', 'frcmsg']:
-        mtype = 'Start' if data == 'strtmsg' else 'Force'
-        await cbq.message.edit(f'Send {mtype} Text')
+        text = 'Start' if data == 'strtmsg' else 'Force'
+        await cbq.message.edit(f'Send {text} Text')
         lstn = await client.listen(
             user_id=cbq.message.chat.id,
         )
@@ -137,12 +137,12 @@ async def cbqchange(client: Bot, cbq: CallbackQuery):
         field = 'START_MESSAGE' if data == 'strtmsg' else 'FORCE_MESSAGE'
         await replace(field, lstn.text)
         await cbq.message.edit(
-            f'{mtype} Text:\n  `{lstn.text}`',
+            f'{text} Text:\n  `{lstn.text}`',
             reply_markup=ikb(Markup.BACK),
         )
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def cbqadd(client: Bot, cbq: CallbackQuery):
     async def addvar(field, new):
         await client.mdb.invar(
@@ -217,7 +217,7 @@ async def cbqadd(client: Bot, cbq: CallbackQuery):
     )
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def cbqdel(client: Bot, cbq: CallbackQuery):
     async def delvar(field, newkey):
         await client.mdb.rmvar(

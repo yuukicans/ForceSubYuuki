@@ -26,9 +26,9 @@ gVarBcFail = 0
 gVarBcTotal = 0
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def broadcast(client: Bot, message: Message):
-    async def progress(msg):
+    async def progress(msg) -> Message:
         global gVarBcSent
         global gVarBcFail
         global gVarBcTotal
@@ -135,7 +135,7 @@ async def cbqbcstats(client: Bot, cbq: CallbackQuery):
         )
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def cbqstats(client: Bot, cbq: CallbackQuery):
     global gVarBcRun
     global gVarBcSent

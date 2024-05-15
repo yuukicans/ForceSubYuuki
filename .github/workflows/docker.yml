@@ -19,14 +19,7 @@ jobs:
         -p ${{ secrets.DOCKER_TOKEN }}
 
     - name: Build
-      run: docker build . -t ugorwx/fsub:${{ github.sha }}
-
-    - name: Tag
-      run: |
-        docker tag ugorwx/fsub:${{ github.sha }} \
-        ugorwx/fsub:latest
+      run: docker build . -t ugorwx/fsub
 
     - name: Push
-      run: |
-        docker push ugorwx/fsub:${{ github.sha }}
-        docker push ugorwx/fsub:latest
+      run: docker push ugorwx/fsub

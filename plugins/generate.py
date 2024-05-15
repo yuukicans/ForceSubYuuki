@@ -9,7 +9,7 @@ from .helpers import helpers
 from bot.client import Bot
 
 
-@decorator.Admins
+@decorator(['adminsOnly'])
 async def generate(client: Bot, message: Message):
     if not helpers.generate:
         return None
