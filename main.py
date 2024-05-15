@@ -72,10 +72,9 @@ async def dbctrl():
         'FORCE_MESSAGE': Bot.env.forcemsg,
         'ADMIN_IDS': Bot.env.OWNER_ID,
     }
-    if bvar:
+    if not bvar:
         for key, value in dvar.items():
-            if not bvar.get(key):
-                await Bot.mdb.invar('BOT_VARS', key, value)
+            await Bot.mdb.invar('BOT_VARS', key, value)
 
 
 async def botcmd():
