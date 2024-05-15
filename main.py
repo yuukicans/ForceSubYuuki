@@ -6,6 +6,7 @@ from pyrogram.types import BotCommand
 
 from bot.client import Bot
 from plugins import loadplugin
+from plugins.helpers import helpers
 
 
 async def main():
@@ -21,7 +22,7 @@ async def main():
     await Bot.var.fetching()
 
     Bot.log.info('Initializing Environment')
-    await fetching()
+    await helpers.cached()
 
     Bot.log.info('Setting Bot Command')
     await botcmd()
@@ -29,6 +30,7 @@ async def main():
     Bot.log.info('Importing Plugins')
     loadplugin()
 
+    Bot.log.info('Checking Restart Data')
     await rmsg('rmsg')
     await rmsg('bmsg')
 
@@ -41,7 +43,6 @@ async def dbctrl():
         'START_MESSAGE': Bot.env.startmsg,
         'FORCE_MESSAGE': Bot.env.forcemsg,
     }
-
     if bvar:
         for key, value in dvar.items():
             if not bvar.get(key):
@@ -75,12 +76,6 @@ async def getdbcid():
         await hellomsg.delete()
     except RPCError as e:
         Bot.log.warning(str(e))
-
-
-async def fetching():
-    from plugins.helpers import helpers
-
-    await helpers.cached()
 
 
 async def rmsg(_id: str):

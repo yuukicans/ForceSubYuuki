@@ -6,7 +6,7 @@ class Time:
     def __init__(self, offset: int):
         self.offset = offset
 
-    def _offset_(self) -> datetime.datetime:
+    def _offset_(self) -> datetime:
         utctime = datetime.datetime.utcnow()
         timeoffset = datetime.timedelta(hours=self.offset)
         return utctime + timeoffset
@@ -26,9 +26,9 @@ class Logger:
 
     def __init__(self, __name__: str):
         self.name = __name__
-        self.setup_logger()
+        self.setup()
 
-    def setup_logger(self):
+    def setup(self) -> logging:
         logging.Formatter.converter = self.logtime.converted
         logging.basicConfig(
             format=self.logfrmt,
@@ -36,7 +36,8 @@ class Logger:
             handlers=[
                 logging.FileHandler(
                     self.logfile,
-                ), logging.StreamHandler(),
+                ),
+                logging.StreamHandler(),
             ],
             level=logging.INFO,
         )

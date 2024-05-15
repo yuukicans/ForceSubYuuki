@@ -7,49 +7,51 @@ from bot.client import Bot
 
 class Helpers:
     cacheids = {}
+    protectc: bool = False
+    generate: bool = False
+    adminids: list[int | None] = []
+    fsubcids: list[int | None] = []
+    startmsg: str = ''
+    forcemsg: str = ''
 
     def __init__(self, Client: Bot):
         self._client_ = Client
-        self.protectc = False
-        self.generate = False
-        self.adminids = []
-        self.fsubcids = []
-        self.startmsg = None
-        self.forcemsg = None
 
-    def gvars(self, vari: str, default=None):
-        return self._client_.var.vars.get(vari, default)
+    def gvars(self, vari: str) -> list:
+        return self._client_.var.vars.get(vari)
 
     def initializing(self):
-        self.fsubcids = self.gvars('FSUB_IDS', [])
-        self.protectc = self.gvars('PROTECT_CONTENT', [])[0]
-        self._client_.log.info('Protect Content Initialized')
-        self.adminids = self.gvars('ADMIN_IDS', [])
+        self.adminids = self.gvars('ADMIN_IDS')
         self._client_.log.info('Admins Initialized')
-        self.startmsg = self.gvars('START_MESSAGE', [])[0]
+        self.fsubcids = self.gvars('FSUB_IDS')
+        self.protectc = self.gvars('PROTECT_CONTENT')[0]
+        self._client_.log.info(f'Protect: {self.protectc}')
+        self.startmsg = self.gvars('START_MESSAGE')[0]
         self._client_.log.info('Start Text Initialized')
-        self.forcemsg = self.gvars('FORCE_MESSAGE', [])[0]
+        self.forcemsg = self.gvars('FORCE_MESSAGE')[0]
         self._client_.log.info('Force Text Initialized')
-        self.generate = self.gvars('GEN_STATUS', [])[0]
-        self._client_.log.info('Generator Initialized')
+        self.generate = self.gvars('GEN_STATUS')[0]
+        self._client_.log.info(f'Generate: {self.generate}')
 
     def urlikb(self, text: str, url: str) -> ikb:
         return ikb([[(text, url, 'url')]])
 
-    def urlstr(self, string: str, share=False) -> str:
+    def urlstr(self, url: str, share=False) -> str:
         if share:
-            return f'https://t.me/share/url?url={string}'
-        return f'https://t.me/{self._client_.me.username}?start={string}'
+            return f'https://t.me/share/url?url={url}'
+        return (
+            'https://t.me/'
+            f'{self._client_.me.username}?start={url}'
+        )
 
-    @property
     def clear(self):
         self.cacheids = {}
 
-    def reload(self):
-        self.clear
+    def reload(self) -> dict:
+        self.clear()
         return self.initializing()
 
-    async def cached(self):
+    async def cached(self) -> dict:
         self.reload()
         if not self.fsubcids:
             return None
@@ -70,7 +72,11 @@ class Helpers:
             except RPCError as e:
                 self._client_.log.warning(f'FSub-{i + 1}: {e}')
 
-    async def usrikb(self, message: Message, user: int):
+    async def usrikb(
+        self,
+        message: Message,
+        user: int,
+    ) -> None:
         nojoin = await self.nojoin(user)
         if not self.fsubcids or not nojoin:
             return None
@@ -95,7 +101,7 @@ class Helpers:
             )
         return ikb(layouts)
 
-    async def nojoin(self, user: int) -> list[int] | None:
+    async def nojoin(self, user: int) -> list[int] or None:
         joined = set()
         if not self.fsubcids or user in self.adminids:
             return None
@@ -117,14 +123,16 @@ class Helpers:
 
     def decode(self, string: str) -> list[int] | range:
         dbchid = self._client_.env.DATABASE_ID
-        decode = self._client_.url.decode(string).split('-')
-        if len(decode) == 2:
-            return [int(int(decode[1]) / abs(dbchid))]
-        elif len(decode) == 3:
-            start = int(int(decode[1]) / abs(dbchid))
-            end = int(int(decode[2]) / abs(dbchid))
-            return range(start, end + 1) if start < end \
+        decoded = self._client_.url.decode(string).split('-')
+        if len(decoded) == 2:
+            return [int(int(decoded[1]) / abs(dbchid))]
+        elif len(decoded) == 3:
+            start = int(int(decoded[1]) / abs(dbchid))
+            end = int(int(decoded[2]) / abs(dbchid))
+            return (
+                range(start, end + 1) if start < end
                 else range(start, end - 1, -1)
+            )
 
     async def getmsgs(self, ids: int):
         return await self._client_.get_messages(
@@ -132,7 +140,11 @@ class Helpers:
             ids,
         )
 
-    async def copymsgs(self, msg: Message, user: int):
+    async def copymsgs(
+        self,
+        msg: Message,
+        user: int,
+    ) -> Message:
         await msg.copy(
             user,
             protect_content=self.protectc,
@@ -168,7 +180,8 @@ helpers = Helpers(Bot)
 
 
 class Filter:
-    def decorator(self, func):
+    @staticmethod
+    def decorator(func) -> callable:
         async def wrapped(client, event):
             if hasattr(event, 'from_user'):
                 user = event.from_user.id

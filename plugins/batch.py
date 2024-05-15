@@ -36,6 +36,8 @@ async def batch(client: Bot, message: Message):
     def dburl(msgid):
         return f'https://t.me/c/{str(cdb)[4:]}/{msgid}'
 
+    await message.delete()
+
     fask = await ask(
         'Forward: First Message',
         f'tg://openmessage?chat_id={str(cdb)[4:]}',

@@ -12,7 +12,7 @@ class Database:
         self.users = self.mongo['users']
         self.rstrt = self.mongo['rstrt']
 
-    async def gvars(self, _id: str | int) -> any:
+    async def gvars(self, _id: str | int) -> None:
         return await self.bvars.find_one({'_id': _id})
 
     async def invar(
@@ -20,7 +20,7 @@ class Database:
         _id: str | int,
         field: str,
         value: str | int,
-    ) -> any:
+    ) -> None:
         await self.bvars.update_one(
             {'_id': _id},
             {'$addToSet': {field: value}},
@@ -32,7 +32,7 @@ class Database:
         _id: str | int,
         field: str,
         value: str | int,
-    ) -> any:
+    ) -> None:
         await self.bvars.update_one(
             {'_id': _id},
             {'$pull': {field: value}},
@@ -42,13 +42,13 @@ class Database:
         self,
         _id: str | int,
         field: str,
-    ) -> any:
+    ) -> None:
         await self.bvars.update_one(
             {'_id': _id},
             {'$unset': {field: ''}},
         )
 
-    async def gusrs(self) -> list[int] | None:
+    async def gusrs(self) -> list[int] or None:
         pipe = [{'$project': {'_id': 1}}]
         crsr = self.users.aggregate(pipe)
         return [document['_id'] async for document in crsr]
@@ -74,7 +74,7 @@ class Database:
             },
         )
 
-    async def gmsgs(self, msg: str) -> dict | None:
+    async def gmsgs(self, msg: str) -> dict or None:
         return await self.rstrt.find_one(
             {'_id': msg},
         )
