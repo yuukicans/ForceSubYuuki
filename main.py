@@ -33,6 +33,7 @@ async def main():
     Bot.log.info('Checking Restart Data')
     await rmsg('rmsg')
     await rmsg('bmsg')
+    Bot.log.info('Restart Data Checked')
 
 
 async def dbctrl():
