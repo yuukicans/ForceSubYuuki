@@ -35,30 +35,17 @@ async def main():
 
 async def dbctrl():
     bvar = await Bot.mdb.gvars('BOT_VARS')
-    if bvar and not bvar.get('GEN_STATUS'):
-        await Bot.mdb.invar(
-            'BOT_VARS',
-            'GEN_STATUS',
-            True,
-        )
-    if bvar and not bvar.get('PROTECT_CONTENT'):
-        await Bot.mdb.invar(
-            'BOT_VARS',
-            'PROTECT_CONTENT',
-            True,
-        )
-    if bvar and not bvar.get('START_MESSAGE'):
-        await Bot.mdb.invar(
-            'BOT_VARS',
-            'START_MESSAGE',
-            Bot.env.startmsg,
-        )
-    if bvar and not bvar.get('FORCE_MESSAGE'):
-        await Bot.mdb.invar(
-            'BOT_VARS',
-            'FORCE_MESSAGE',
-            Bot.env.forcemsg,
-        )
+    dvar = {
+        'GEN_STATUS': True,
+        'PROTECT_CONTENT': True,
+        'START_MESSAGE': Bot.env.startmsg,
+        'FORCE_MESSAGE': Bot.env.forcemsg
+    }
+
+    if bvar:
+        for key, value in dvar.items():
+            if not bvar.get(key):
+                await Bot.mdb.invar('BOT_VARS', key, value)
 
 
 async def starting():
