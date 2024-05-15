@@ -39,7 +39,7 @@ async def dbctrl():
         'GEN_STATUS': True,
         'PROTECT_CONTENT': True,
         'START_MESSAGE': Bot.env.startmsg,
-        'FORCE_MESSAGE': Bot.env.forcemsg
+        'FORCE_MESSAGE': Bot.env.forcemsg,
     }
 
     if bvar:
