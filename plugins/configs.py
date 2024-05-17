@@ -1,3 +1,4 @@
+from pyrogram.enums import ParseMode
 from pyrogram.errors import RPCError
 from pyrogram.filters import command
 from pyrogram.filters import private
@@ -85,11 +86,13 @@ async def cbqset(client: Bot, cbq: CallbackQuery):
             'Start Text:\n  '
             f'`{bvar.get("START_MESSAGE", [])[0]}`',
             reply_markup=ikb(Markup.SET_START),
+            parse_mode=ParseMode.MARKDOWN,
         ),
         'frcmsg': lambda: cbq.message.edit(
             'Force Text:\n  '
             f'`{bvar.get("FORCE_MESSAGE", [])[0]}`',
             reply_markup=ikb(Markup.SET_FORCE),
+            parse_mode=ParseMode.MARKDOWN,
         ),
     }
     if action := action.get(data):
@@ -139,6 +142,7 @@ async def cbqchange(client: Bot, cbq: CallbackQuery):
         await cbq.message.edit(
             f'{text} Text:\n  `{lstn.text}`',
             reply_markup=ikb(Markup.BACK),
+            parse_mode=ParseMode.MARKDOWN,
         )
 
 
