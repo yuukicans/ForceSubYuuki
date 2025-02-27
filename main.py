@@ -13,29 +13,29 @@ from plugins.helpers import helpers
 async def main():
     await dbctrl()
 
-    Bot.log.info('Starting Client')
+    Bot.log.info('Memulai Mendeploy')
     await starting()
 
-    Bot.log.info('Initializing DatabaseID')
+    Bot.log.info('Menginisialisasi DatabaseID')
     await getdbcid()
-    Bot.log.info('DatabaseID Initialized')
+    Bot.log.info('DatabaseID Diinisialisasi')
 
-    Bot.log.info('Fetching Mongo Database')
+    Bot.log.info('Mengambil Basis Data Mongo')
     await Bot.var.fetching()
 
-    Bot.log.info('Initializing Environment')
+    Bot.log.info('Menginisialisasi Lingkungan')
     await helpers.cached()
 
-    Bot.log.info('Setting Bot Command')
+    Bot.log.info('Menetapkan Perintah Bot')
     await botcmd()
 
-    Bot.log.info('Importing Plugins')
+    Bot.log.info('Mengimpor Plugin')
     loadplugin()
 
-    Bot.log.info('Checking Restart Data')
+    Bot.log.info('Memeriksa Data Restart')
     await rmsg('rmsg')
     await rmsg('bmsg')
-    Bot.log.info('Restart Data Checked')
+    Bot.log.info('Data Restart Telah Diperiksa')
 
 
 def rpchndlr(func):
@@ -100,5 +100,5 @@ async def rmsg(_id: str):
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(main())
-    Bot.log.info('Bot Has Been Activated')
+    Bot.log.info('Bot Berhasil Aktif')
     Bot.loop.run_forever()
