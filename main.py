@@ -13,29 +13,29 @@ from plugins.helpers import helpers
 async def main():
     await dbctrl()
 
-    Bot.log.info('Memulai Mendeploy')
+    Bot.log.info('ᴍᴇᴍᴜʟᴀɪ ᴍᴇɴᴅᴇᴘʟᴏʏ')
     await starting()
 
-    Bot.log.info('Menginisialisasi DatabaseID')
+    Bot.log.info('ᴍᴇɴɢɪɴɪsɪᴀʟɪsɪ ᴅᴀᴛᴀʙᴀsᴇ ɪᴅ')
     await getdbcid()
-    Bot.log.info('DatabaseID Diinisialisasi')
+    Bot.log.info('ᴅᴀᴛᴀʙᴀsᴇ ɪᴅ ᴅɪɪɴɪsɪᴀʟɪsɪ')
 
-    Bot.log.info('Mengambil Basis Data Mongo')
+    Bot.log.info('ᴍᴇɴɢᴀᴍʙɪʟ ᴅᴀᴛᴀʙᴀsᴇ ᴍᴏɴɢᴏ')
     await Bot.var.fetching()
 
-    Bot.log.info('Menginisialisasi Lingkungan')
+    Bot.log.info('ᴍᴇɴɢɪɴɪsɪᴀʟɪsɪ ʙᴀᴘᴀᴋᴍᴜ')
     await helpers.cached()
 
-    Bot.log.info('Menetapkan Perintah Bot')
+    Bot.log.info('ᴍᴇɴᴇᴛᴀᴘᴋᴀɴ ᴘᴇʀɪɴᴛᴀʜ ʙᴏᴛ')
     await botcmd()
 
-    Bot.log.info('Mengimpor Plugin')
+    Bot.log.info('ᴍᴇɴɢɪᴍᴘᴏʀ')
     loadplugin()
 
-    Bot.log.info('Memeriksa Data Restart')
+    Bot.log.info('ᴍᴇᴍᴇʀɪᴋsᴀ ᴅᴀᴛᴀ ʀᴇsᴛᴀʀᴛ')
     await rmsg('rmsg')
     await rmsg('bmsg')
-    Bot.log.info('Data Restart Telah Diperiksa')
+    Bot.log.info('ᴅᴀᴛᴀ ʀᴇsᴛᴀʀᴛ ᴛᴇʟᴀʜ ᴅɪ ᴘᴇʀɪᴋsᴀ')
 
 
 def rpchndlr(func):
@@ -58,7 +58,7 @@ async def starting():
 async def getdbcid():
     hellomsg = await Bot.send_message(
         Bot.env.DATABASE_ID,
-        'Hello Worldl!',
+        'ʜᴇʟʟᴏ sᴇᴍᴜᴀ!',
     )
     await hellomsg.delete()
 
@@ -83,7 +83,7 @@ async def botcmd():
             BotCommand(Bot.cmd.start, 'Starting Bot'),
         ],
     )
-    Bot.log.info('Bot Command Has Set')
+    Bot.log.info('ʙᴏᴛ ᴘᴇʀɪɴᴛᴀʜ ᴛᴇʟᴀʜ ᴅɪsᴇᴛᴛɪɴɢ')
 
 
 async def rmsg(_id: str):
@@ -92,7 +92,7 @@ async def rmsg(_id: str):
         cid, mid, = rmsg['cid'], rmsg['mid']
         await Bot.send_message(
             cid,
-            'Bot Restarted',
+            'ʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ',
             reply_to_message_id=mid,
         )
         await Bot.mdb.rmmsg(_id)
@@ -100,5 +100,5 @@ async def rmsg(_id: str):
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(main())
-    Bot.log.info('Bot Berhasil Aktif')
+    Bot.log.info('ʙᴏᴛ ʙᴇʀʜᴀsɪʟ ᴀᴋᴛɪᴘ')
     Bot.loop.run_forever()
