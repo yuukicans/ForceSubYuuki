@@ -35,11 +35,11 @@ class Bot(Client):
     async def start(self):
         uvloop.install()
         await super().start()
-        self.log.info(f'{self.me.id} Started')
+        self.log.info(f'{self.me.id} sᴛᴀʀᴛᴇᴅ')
 
     async def stop(self, *args):
         await super().stop()
-        self.log.warning('Client Stopped')
+        self.log.warning('ᴄʟɪᴇɴᴅ sᴛᴏᴘᴘᴇᴅ')
 
 
 Bot = Bot()
