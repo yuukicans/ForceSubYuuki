@@ -226,91 +226,91 @@ decorator = Decorator()
 class Markup:
     HOME = [
         [
-            ('Generate Controller', 'set-gen'),
+            ('ɢᴇɴᴇʀᴀᴛᴇ ᴄᴏɴᴛʀᴏʟʟᴇʀ', 'set-gen'),
         ],
         [
-            ('Start Text', 'set-strtmsg'),
-            ('Force Text', 'set-frcmsg'),
+            ('sᴛᴀʀᴛ ᴛᴇxᴛ', 'set-strtmsg'),
+            ('ғᴏʀᴄᴇ ᴛᴇxᴛ', 'set-frcmsg'),
         ],
         [
-            ('Protect Content', 'set-prtctcntnt'),
+            ('ᴘʀᴏᴛᴇᴄᴛ ᴄᴏɴᴛᴇɴᴛ', 'set-prtctcntnt'),
         ],
         [
-            ('Admin IDs', 'set-admnids'),
-            ('FSub IDs', 'set-fscids'),
+            ('ᴀᴅᴍɪɴ ɪᴅs', 'set-admnids'),
+            ('ғsᴜʙ ɪᴅs', 'set-fscids'),
         ],
         [
-            ('Monitor and Stats', 'home-stats'),
+            ('ᴍᴏɴɪᴛᴏʀ ᴅᴀɴ sᴛᴀᴛs', 'home-stats'),
         ],
         [
-            ('Close', 'home-close'),
+            ('ᴄʟᴏsᴇ', 'home-close'),
         ],
     ]
 
     STATS = [
         [
-            ('Broadcast', 'stats-bc'),
+            ('ʙʀᴏᴀᴅᴄᴀsᴛ', 'stats-bc'),
         ],
         [
-            ('Ping', 'stats-ping'),
-            ('Users', 'stats-users'),
+            ('ᴘɪɴɢ', 'stats-ping'),
+            ('ᴜsᴇʀs', 'stats-users'),
         ],
         [
-            ('« Back', 'home-home'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
         ],
     ]
 
     BACK = [
         [
-            ('« Back', 'home-home'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
         ],
     ]
 
     SET_ADMIN = [
         [
-            ('Add User', 'add-admnids'),
-            ('Del User', 'del-admnids'),
+            ('ᴀᴅᴅ ғsᴜʙ', 'add-admnids'),
+            ('ᴅᴇʟ ᴅsᴜʙ', 'del-admnids'),
         ],
         [
-            ('« Back', 'home-home'),
+            ('« ᴋᴇᴍʙᴀʟᴜ', 'home-home'),
         ],
     ]
 
     SET_FSUB = [
         [
-            ('Add Chat', 'add-fscids'),
-            ('Del Chat', 'del-fscids'),
+            ('ᴀᴅᴅ ғsᴜʙ', 'add-fscids'),
+            ('ᴅᴇʟ ғsᴜʙ', 'del-fscids'),
         ],
         [
-            ('« Back', 'home-home'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
         ],
     ]
 
     SET_PROTECT = [
         [
-            ('« Back', 'home-home'),
-            ('Change', 'change-prtctcntnt'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
+            ('ɢᴀɴᴛɪ', 'change-prtctcntnt'),
         ],
     ]
 
     SET_GENERATOR = [
         [
-            ('« Back', 'home-home'),
-            ('Change', 'change-gen'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
+            ('ɢᴀɴᴛɪ', 'change-gen'),
         ],
     ]
 
     SET_START = [
         [
-            ('« Back', 'home-home'),
-            ('Change', 'change-strtmsg'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
+            ('ɢᴀɴᴛɪ', 'change-strtmsg'),
         ],
     ]
 
     SET_FORCE = [
         [
-            ('« Back', 'home-home'),
-            ('Change', 'change-frcmsg'),
+            ('« ᴋᴇᴍʙᴀʟɪ', 'home-home'),
+            ('ɢᴀɴᴛɪ', 'change-frcmsg'),
         ],
     ]
 
